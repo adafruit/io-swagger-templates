@@ -7,6 +7,7 @@ var spawn = require('child_process').spawn,
     server = require('commander'),
     package = require('./package.json');
 
+var command = process.platform === 'win32' ? 'forever.cmd' : 'forever';
 server._name = 'adafruit-io server';
 
 function start() {
@@ -15,7 +16,7 @@ function start() {
   process.stdout.write(logo);
   console.log('[status]  starting server...');
 
-  var child = spawn('forever', ['start', '-s', 'index.js'], {
+  var child = spawn(command, ['start', '-s', 'index.js'], {
     cwd: __dirname,
     env: process.env,
     detached: true
@@ -30,7 +31,7 @@ function start() {
 
 function restart() {
 
-  var child = spawn('forever', ['restart', 'index.js'], {
+  var child = spawn(command, ['restart', 'index.js'], {
     cwd: __dirname,
     env: process.env,
     detached: true
@@ -44,7 +45,7 @@ function restart() {
 
 function stop() {
 
-  var child = spawn('forever', ['stop', 'index.js'], {
+  var child = spawn(command, ['stop', 'index.js'], {
     cwd: __dirname,
     env: process.env,
     detached: true

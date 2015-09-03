@@ -65,44 +65,10 @@ $ adafruit-io help server
 ```
 
 To start the server, you can run the following command on the default port of `8080`:
-```
+```console
 $ adafruit-io server start
-
-                                     `:-
-                                    +NMMy
-                                  `yMMMMM:
-                                 :mMMMMMMm`
-                               `sMMMMMMMMMs
-                              `dMMMMMMMMMMM-
-                              hMMMMMMMMMMMMh
-           -syyyyyyyyyyso/:` .MMMMMMMMMMMMMN
-           yMMMMMMMMMMMMMMNmy:NMMMMMMMMMMMMd
-           `sNMMMMMMMMMMMMMMMNNMMMMo:mMMMMm//ossso/:.`
-             :mMMMMMMMMMMMMMMMMMMMy  yMMMMmNMMMMMMMMNmhs+:-`
-              `sMMMMMMMMMMmsydNMMM+ `mMMMMMMMMMMMMMMMMMMMMNmy
-                /mMMMMMMMMd:` ./dMd:hMNmdhhdMMMMMMMMMMMMMMMNy
-                 .omMMMMMMMMdy+/yMMMMd-```.:mMMMMMMMMMMMNd+.
-                   `:oymNMMMMMMmdNMMNNdhhdmMMMMMMMMMMMms-`
-                     :ymNMMMMh:``dMd-+mMMMMMMMMMMMNmy:`
-                   `yMMMMMMMo `:dMMN. .mMMMMdysso+-`
-                  `dMMMMMMMMssdMMMMMd- +MMMMMm/
-                  sMMMMMMMMMMMMMMMMMMNhdMMMMMMM:
-                 -MMMMMMMMMMMMMMNyMMMMMMMMMMMMMd
-                `dMMMMMMMMMMMMMd-:MMMMMMMMMMMMMN
-                oMMMMMMMMMMNNy/   +NMMMMMMMMMMMN
-               .MMMMMMNmho/-`      -yNMMMMMMMMMN
-               `sdho/-`              .omMMMMMMMM
-                                        -sNMMMMM
-                                          `/hMMh
-                                              `
-----------------------------------------------------------------------
-                           adafruit io
-----------------------------------------------------------------------
-[status]  starting server...
-[status]  adafruit io is now ready at http://localhost:8080/api
-[info]    documentation is available at http://localhost:8080/api/docs
-
 ```
+![Alt text](/start_server.png?raw=true "Server starting")
 
 The server will stay up until you shut down your computer, or stop the server.
 To stop the server, run the following command:

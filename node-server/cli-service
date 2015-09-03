@@ -11,6 +11,9 @@ service._name = 'adafruit-io service';
 
 function start() {
 
+  if(require('os').platform() !== 'linux')
+    return console.error('[error]   running adafruit io as a service is only supported on linux');
+
   process.env.AIO_PORT = service.port || 8080;
   process.stdout.write(logo);
   console.log('[status]  starting service...');
@@ -29,6 +32,9 @@ function start() {
 }
 
 function stop() {
+
+ if(require('os').platform() !== 'linux')
+    return console.error('[error]   running adafruit io as a service is only supported on linux');
 
   var child = spawn('forever-service', ['delete', 'aioserver'], {
     cwd: __dirname,
