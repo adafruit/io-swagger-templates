@@ -4,7 +4,7 @@ var app = require('connect')();
 var http = require('http');
 var swaggerTools = require('swagger-tools');
 
-var serverPort = {{serverPort}};
+var serverPort = process.env.AIO_PORT || 8080;
 
 // swaggerRouter configuration
 var options = {
@@ -17,7 +17,8 @@ var options = {
 var swaggerDoc = require('./api/swagger.json');
 
 // Initialize the Swagger middleware
-swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
+swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
+
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
@@ -27,12 +28,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Route validated requests to appropriate controller
   app.use(middleware.swaggerRouter(options));
 
-  // Serve the Swagger documents and Swagger UI
-  app.use(middleware.swaggerUi());
-
   // Start the server
   http.createServer(app).listen({{serverPort}}, function () {
-    console.log('Your server is listening on port %d (http://localhost:%d)', {{serverPort}}, {{serverPort}});
-    console.log('Swagger-ui is available on http://localhost:%d/docs', {{serverPort}});
+    console.log('Adafruit IO is listening on port %d (http://localhost:%d)', serverPort, serverPort);
   });
+
 });
