@@ -12,7 +12,10 @@ module.exports = function(grunt) {
         options: {
           stdout: true
         },
-        command: 'java -jar ~/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-server -l nodejs -t node-server'
+        command: [
+          'java -jar ~/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-server -l nodejs -t node-server',
+          'cp node-server/README.md ~/adafruit-io-server'
+        ].join('&&')
       }
     },
   });
