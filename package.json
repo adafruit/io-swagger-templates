@@ -1,0 +1,24 @@
+{
+  "name": "io-swagger-templates",
+  "version": "1.0.0",
+  "description": "Adafruit IO template grunt build tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adafruit/io-swagger-templates.git"
+  },
+  "author": "Todd Treece <todd@uniontownlabs.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adafruit/io-swagger-templates/issues"
+  },
+  "homepage": "https://github.com/adafruit/io-swagger-templates#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-shell": "^1.1.2",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}
