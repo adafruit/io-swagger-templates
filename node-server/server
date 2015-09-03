@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+var spawn = require('child_process').spawn,
+    fs = require('fs'),
+    path = require('path'),
+    logo = fs.readFileSync(path.join(__dirname,'logo.txt'), 'utf8'),
+    server = require('commander'),
+    package = require('./package.json');
+
+function start() {
+
+  process.env.AIO_PORT = server.port || 8080;
+
+  var child = spawn('forever', ['start', '-s', 'index.js'], {
+    cwd: __dirname,
+    env: process.env,
+    detached: true
+  });
+
+  console.log(logo);
+  console.log('starting server on port %d...', process.env.AIO_PORT);
+
+  child.on('error', console.log);
+
+}
+
+function restart() {
+
+  var child = spawn('forever', ['restart', 'index.js'], {
+    cwd: __dirname,
+    env: process.env,
+    detached: true
+  });
+
+  console.log('restarting server...');
+
+  child.on('error', console.log);
+
+}
+
+function stop() {
+
+  var child = spawn('forever', ['stop', 'index.js'], {
+    cwd: __dirname,
+    env: process.env,
+    detached: true
+  });
+
+  console.log('stopping server...');
+
+  child.on('error', console.log);
+
+}
+
+server.version(package.version);
+server.option('-p, --port <n>', 'http port', parseInt);
+server.command('start').description('starts the server').action(start);
+server.command('restart').description('restarts the server').action(restart);
+server.command('stop').description('stops the server').action(stop);
+server.parse(process.argv);
+
+if (!process.argv.slice(2).length)
+  service.outputHelp();
+
+
