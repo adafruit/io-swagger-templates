@@ -7,9 +7,13 @@ var spawn = require('child_process').spawn,
     service = require('commander'),
     package = require('./package.json');
 
+service._name = 'adafruit-io service';
+
 function start() {
 
   process.env.AIO_PORT = service.port || 8080;
+  process.stdout.write(logo);
+  console.log('[status]  starting service...');
 
   var child = spawn('forever-service', ['install', '-s', 'index.js', '--start', 'aioserver'], {
     cwd: __dirname,
@@ -17,8 +21,8 @@ function start() {
     detached: true
   });
 
-  console.log(logo);
-  console.log('starting service...');
+  console.log('[status]  adafruit io is now ready at http://localhost:%d/api', process.env.AIO_PORT);
+  console.log('[info]    documentation is available at http://localhost:%d/api/docs\n', process.env.AIO_PORT);
 
   child.on('error', console.log);
 
@@ -32,7 +36,7 @@ function stop() {
     detached: true
   });
 
-  console.log('stopping service...');
+  console.log('stopping service...\n');
 
   child.on('error', console.log);
 

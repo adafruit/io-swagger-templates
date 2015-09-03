@@ -32,9 +32,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
   app.use(middleware.swaggerUi());
 
   // Start the server
-  http.createServer(app).listen({{serverPort}}, function () {
-    console.log('Adafruit IO is listening on port %d (http://localhost:%d)', serverPort, serverPort);
-    console.log('Documentation is available at http://localhost:%d/api/docs', serverPort);
+  http.createServer(app).listen(serverPort, function () {
+    console.log('[status] Adafruit IO is now ready at http://localhost:%d/api', serverPort, serverPort);
+    console.log('[info] Documentation is available at http://localhost:%d/api/docs\n', serverPort);
   });
 
 });
