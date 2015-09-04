@@ -13,8 +13,9 @@ module.exports = function(grunt) {
           stdout: true
         },
         command: [
-          'java -jar ~/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-server -l nodejs -t node-server',
-          'find ./node-server -type f -not -name "*.mustache" -exec cp -r "{}" ~/adafruit-io-server \\;'
+          'java -jar ./swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ./build/adafruit-io-node/server -l nodejs -t ./node/server',
+          'find ./node -not -name "*.mustache" -exec cp -r "{}" ./build/adafruit-io-node \\;',
+          'rm ./build/adafruit-io-node/server/package.json
         ].join('&&')
       }
     },

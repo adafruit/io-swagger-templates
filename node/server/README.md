@@ -1,4 +1,4 @@
-# Adafruit IO Server
+# Node.js Adafruit IO Server
 This is an open source API compatible version of Adafruit IO that you can run locally.
 
 ## Installation
@@ -67,9 +67,32 @@ $ adafruit-io help server
 To start the server, you can run the following command on the default port of `8080`:
 ```console
 $ adafruit-io server start
+                                     ▄▄
+                                   ▄████
+                                 ▄███████
+                                █████████▌
+                               ███████████
+                              ████████████▌
+             ███████████████▄ ████████████▌
+              █████████████████████▀▀█████ ▄▄▄▄▄▄▄
+               ▐██████████████████   █████████████████▄▄
+                 ▀█████████  ▀▀███  ██████████████████████
+                   █████████▄▄  ▐████▀    ▐█████████████▀
+                     ▀▀███████████████▄▄█████████████▀
+                      ▄███████   ██  ▀████████████▀
+                     ███████▀  ▄████  ▐█████▄
+                    █████████████████▄▄██████▄
+                   ███████████████████████████
+                  ██████████████ ▐████████████▌
+                 ▐██████████▀▀    ▀███████████▌
+                 █████▀▀            ▀█████████▌
+                                       ▀██████
+                                          ▀███
+                                             ▀
+----------------------------------------------------------------------
+                           adafruit io
+----------------------------------------------------------------------
 ```
-![Alt text](/start_server.png?raw=true "Server starting")
-
 The server will stay up until you shut down your computer, or stop the server.
 To stop the server, run the following command:
 

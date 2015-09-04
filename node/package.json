@@ -1,7 +1,7 @@
 {
-  "name": "adafruit-io-server",
-  "version": "0.1.1",
-  "description": "API compatible open-source version of the Adafruit IO server",
+  "name": "adafruit-io",
+  "version": "3.0.0",
+  "description": "Client, Server & Tunnel for Adafruit IO",
   "bin": {
     "adafruit-io": "./cli",
     "adafruit-io-server": "./cli-server",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adafruit/adafruit_io_server.git"
+    "url": "git+https://github.com/adafruit/adafruit-io-node.git"
   },
   "author": "Todd Treece <todd@uniontownlabs.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adafruit/adafruit_io_server/issues"
+    "url": "https://github.com/adafruit/adafruit-io-node/issues"
   },
-  "homepage": "https://github.com/adafruit/adafruit_io_server#readme",
+  "homepage": "https://github.com/adafruit/adafruit-io-node#readme",
   "devDependencies": {
     "dotenv": "^1.2.0",
     "gulp": "^3.9.0",
@@ -31,9 +31,15 @@
   "keywords": [
     "adafruit",
     "io",
-    "adafruit io"
+    "adafruit io",
+    "iot",
+    "internet",
+    "of",
+    "things"
   ],
   "dependencies": {
+    "mqtt": "^1.1.2",
+    "restler": "^3.2.2",
     "commander": "^2.8.1",
     "connect": "^3.4.0",
     "swagger-tools": "^0.9.5"

@@ -2,3 +2,5 @@
 *.swo
 .DS_Store
 node_modules
+swagger-codegen
+build

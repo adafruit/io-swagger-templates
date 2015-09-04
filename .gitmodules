@@ -1,0 +1,3 @@
+[submodule "swagger-codegen"]
+	path = swagger-codegen
+	url = https://github.com/swagger-api/swagger-codegen
