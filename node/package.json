@@ -35,7 +35,12 @@
     "iot",
     "internet",
     "of",
-    "things"
+    "things",
+    "tunnel",
+    "raspberry",
+    "pi",
+    "raspberry pi",
+    "raspi"
   ],
   "dependencies": {
     "mqtt": "^1.1.2",
