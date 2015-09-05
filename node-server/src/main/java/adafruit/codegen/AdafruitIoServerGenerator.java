@@ -1,6 +1,7 @@
 package adafruit.codegen;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.*;
 import io.swagger.models.properties.*;
 
 import java.util.*;
@@ -73,9 +74,8 @@ public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
         );
     if (System.getProperty("noservice") == null) {
       apiTemplateFiles.put(
-          "model.mustache",   // the template to use
-          "models",
-          ".js");       // the extension for each file to write
+          "service.mustache",   // the template to use
+          "Service.js");       // the extension for each file to write
     }
   }
 
