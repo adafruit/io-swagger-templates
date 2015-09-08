@@ -1,0 +1,25 @@
+'use strict';
+/************************ DEPENDENCIES *****************************/
+var util = require('util'),
+    model = require('./index');
+{{#models}}{{#model}}
+util.inherits({{classVarName}}, model);
+var proto = {{classVarName}}.prototype;
+exports = module.exports = {{classVarName}};
+
+/************************* CONSTRUCTOR ****************************/
+function {{classVarName}}(properties) {
+
+  if (! (this instanceof {{classVarName}}))
+    return new {{classVarName}}(properties);
+
+  model.call(this);
+  util._extend(this, properties || {});
+
+}
+
+/*************************** DEFAULTS *****************************/
+proto._fields = [
+  {{#vars}}'{{{name}}}'{{#hasMore}},
+  {{/hasMore}}{{/vars}}
+];{{/model}}{{/models}}

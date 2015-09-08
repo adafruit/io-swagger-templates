@@ -6,12 +6,15 @@ import io.swagger.models.properties.*;
 
 import java.util.*;
 import java.io.File;
+import java.util.regex.Pattern;
 
 public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
 
   public AdafruitIoServerGenerator() {
-    // set the output folder here
+
     outputFolder = "build/server";
+    setModelPackage("lib/models");
+    setApiPackage("lib/controllers");
 
     /**
      * Models.  You can write model files using the modelTemplateFiles map.
@@ -20,21 +23,20 @@ public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
      * a different extension
      */
     modelTemplateFiles.clear();
+    modelTemplateFiles.put("model.mustache", ".js");
 
     /**
      * Api classes.  You can write classes for each Api file with the apiTemplateFiles map.
      * as with models, add multiple entries with different extensions for multiple files per
      * class
      */
-    apiTemplateFiles.put(
-        "controller.mustache",   // the template to use
-        ".js");       // the extension for each file to write
-
+    apiTemplateFiles.clear();
+    apiTemplateFiles.put("controller.mustache", ".js");
     /**
      * Template Location.  This is the location which templates will be read from.  The generator
      * will use the resource stream to attempt to read the templates.
      */
-    templateDir = "node-server";
+    templateDir = "adafruitIoServer";
 
     /**
      * Reserved words.  Override this with reserved words specific to your language
@@ -49,34 +51,58 @@ public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
         );
 
     /**
-     * Additional Properties.  These values can be passed to the templates and
-     * are available in models, apis, and supporting files
-     */
-    additionalProperties.put("apiVersion", apiVersion);
-    additionalProperties.put("serverPort", serverPort);
-
-    /**
      * Supporting Files.  You can write single files for the generator with the
      * entire object tree available.  If the input file has a suffix of `.mustache
      * it will be processed by the template engine.  Otherwise, it will be copied
      */
-    // supportingFiles.add(new SupportingFile("controller.mustache",
-    //   "controllers",
-    //   "controller.js")
-    // );
-    supportingFiles.add(new SupportingFile("swagger.mustache",
-          "api",
-          "swagger.json")
-        );
-    supportingFiles.add(new SupportingFile("index.mustache",
-          "",
-          "index.js")
-        );
-    if (System.getProperty("noservice") == null) {
-      apiTemplateFiles.put(
-          "service.mustache",   // the template to use
-          "Service.js");       // the extension for each file to write
-    }
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("index.mustache","","index.js"));
+
+  }
+
+  @Override
+  public String apiPackage() {
+    return apiPackage;
+  }
+
+  public String singularize(String word) {
+    return Pattern.compile("s$", 0).matcher(word).replaceAll("");
+  }
+
+  @Override
+  public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+      @SuppressWarnings("unchecked")
+      Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
+      String classname = (String) objectMap.get("classname");
+      objectMap.put("modelname", singularize(classname));
+      @SuppressWarnings("unchecked")
+      List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
+      for (CodegenOperation operation : operations) {
+          operation.httpMethod = operation.httpMethod.toLowerCase();
+          List<CodegenParameter> params = operation.allParams;
+          if (params != null && params.size() == 0) {
+              operation.allParams = null;
+          }
+          List<CodegenResponse> responses = operation.responses;
+          if (responses != null) {
+              for (CodegenResponse resp : responses) {
+                  if ("0".equals(resp.code)) {
+                      resp.code = "default";
+                  }
+              }
+          }
+          if (operation.examples != null && !operation.examples.isEmpty()) {
+              // Leave application/json* items only
+              for (Iterator<Map<String, String>> it = operation.examples.iterator(); it.hasNext(); ) {
+                  final Map<String, String> example = it.next();
+                  final String contentType = example.get("contentType");
+                  if (contentType == null || !contentType.startsWith("application/json")) {
+                      it.remove();
+                  }
+              }
+          }
+      }
+      return objs;
   }
 
 }

@@ -1,25 +1,21 @@
 'use strict';
 
-var url = require('url');
+var util = require('util'),
+    boom = require('boom'),
+    {{#operations}}model = require('../models/{{modelname}}.js');{{#operation}}
 
-{{#operations}}
+module.exports.{{operationId}} = function {{operationId}}(req, res) {
 
-var {{classname}} = require('./{{classname}}Service');
+  {{#hasParams}}var {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
+      {{/hasMore}}{{/allParams}}{{#hasParams}};{{/hasParams}}
 
-{{#operation}}
+  model.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    .then(function(data) {
+      res.json(data);
+    }).
+    catch(function(err) {
+      return reply(boom.badRequest('bad request'));
+    });
 
-module.exports.{{nickname}} = function {{nickname}} (req, res, next) {
-  {{#allParams}}var {{paramName}} = req.swagger.params['{{baseName}}'].value;
-  {{/allParams}}
-
-  var result = {{classname}}.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
-  if(typeof result !== 'undefined') {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(result || {}, null, 2));
-  }
-  else
-    res.end();
 };
-{{/operation}}
-{{/operations}}
+{{/operation}}{{/operations}}
