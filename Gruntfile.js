@@ -7,28 +7,49 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    shell: {
-      add_languages: {
+    'replace': {
+      inline: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['..//adafruit-io-node/server/swagger.yaml'],
+            dest: '../adafruit-io-node/server/'
+          }
+        ],
         options: {
-          stdout: true
-        },
-        command: [
-          'jar uvf swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar -C ./overrides classes/com/adafruit/swagger/codegen/ServerCodegen.class'
-        ].join('&&')
-      },
+          usePrefix: false,
+          patterns: [
+            {
+              match: 'host: "io.adafruit.com"',
+              replacement: 'host: "localhost"'
+            },
+            {
+              match: /-\s\"https\"\n/g,
+              replacement: ''
+            }
+          ]
+        }
+      }
+    },
+    shell: {
       node_server: {
         options: {
           stdout: true
         },
         command: [
-          'java -jar swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-node/server -l com.adafruit.swagger.codegen.ServerCodegen',
-          'rm ~/adafruit-io-node/server/package.json'
+          'cd node-server',
+          'mvn package',
+          'cd ..',
+          'java -cp swagger-codegen/modules/swagger-codegen-cli/target/lib/*:./node-server/target/* io.swagger.codegen.Codegen -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-node/server -l adafruit.codegen.AdafruitIoServerGenerator',
+          'java -jar swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-node/server -l swagger-yaml',
+          'rm ~/adafruit-io-node/server/README.md'
         ].join('&&')
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['shell:node_server']);
+  grunt.registerTask('default', ['shell:node_server', 'replace']);
 
 };
