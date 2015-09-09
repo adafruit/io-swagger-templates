@@ -1,20 +1,22 @@
 'use strict';
 
 var util = require('util'),
-    boom = require('boom'),
     {{#operations}}model = require('../models/{{modelname}}.js');{{#operation}}
 
-module.exports.{{operationId}} = function {{operationId}}(req, res) {
+module.exports.{{operationId}} = function {{operationId}}(req, res, next) {
+{{#hasParams}}
 
-  {{#hasParams}}var {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
-      {{/hasMore}}{{/allParams}}{{#hasParams}};{{/hasParams}}
+  var {#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
+      {{/hasMore}}{{/allParams}};
+{{/hasParams}}
 
   model.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     .then(function(data) {
       res.json(data);
     }).
     catch(function(err) {
-      return reply(boom.badRequest('bad request'));
+      res.writeHead(500);
+      res.end();
     });
 
 };

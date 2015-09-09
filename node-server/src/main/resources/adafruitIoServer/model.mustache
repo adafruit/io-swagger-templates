@@ -19,6 +19,7 @@ function {{classVarName}}(properties) {
 }
 
 /*************************** DEFAULTS *****************************/
+proto._type = '{{classVarName}}';
 proto._fields = [
   {{#vars}}'{{{name}}}'{{#hasMore}},
   {{/hasMore}}{{/vars}}
