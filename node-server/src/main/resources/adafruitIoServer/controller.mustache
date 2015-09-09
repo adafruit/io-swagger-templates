@@ -1,18 +1,38 @@
 'use strict';
 
-var util = require('util'),
-    {{#operations}}model = require('../models/{{modelname}}.js');{{#operation}}
+const util = require('util'),
+      xml = require('xml'),
+      {{#operations}}model = require('../models/{{modelname}}');{{#operation}}
 
 module.exports.{{operationId}} = function {{operationId}}(req, res, next) {
 {{#hasParams}}
 
-  var {#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
-      {{/hasMore}}{{/allParams}};
+  const {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
+      {{/hasMore}}{{/allParams}}{{#hasParams}};
 {{/hasParams}}
 
-  model.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+  model.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     .then(function(data) {
-      res.json(data);
+      res.format({
+        'application/json': function() {
+          res.json(data);
+        },
+        'text/csv': function() {
+          res.csv(data);
+        },
+        'application/xml': function() {
+          res.set('Content-Type', 'text/xml');
+          res.send(xml(data));
+        },
+        'text/html': function() {
+          res.set('Content-Type', 'application/json');
+          res.json(data);
+        },
+        'default': function() {
+          res.set('Content-Type', 'application/json');
+          res.json(data);
+        }
+      });
     }).
     catch(function(err) {
       res.writeHead(500);

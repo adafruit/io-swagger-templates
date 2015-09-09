@@ -56,7 +56,6 @@ public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
      * it will be processed by the template engine.  Otherwise, it will be copied
      */
     supportingFiles.clear();
-    supportingFiles.add(new SupportingFile("index.mustache","","index.js"));
 
   }
 
