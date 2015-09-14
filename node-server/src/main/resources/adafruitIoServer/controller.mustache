@@ -9,7 +9,7 @@ module.exports.{{operationId}} = function {{operationId}}(req, res, next) {
 {{#hasParams}}
 
   const {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
-      {{/hasMore}}{{/allParams}}{{#hasParams}};
+        {{/hasMore}}{{/allParams}}{{#hasParams}};
 {{/hasParams}}
 
   {{modelname}}.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})

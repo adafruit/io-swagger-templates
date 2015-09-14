@@ -16,10 +16,13 @@ class {{classVarName}} extends Model {
   }
 
   static fields() {
-    return [
-      {{#vars}}'{{{name}}}'{{#hasMore}},
+    return {
+      {{#vars}}{{{name}}}: {
+        type: '{{{baseType}}}'{{#isContainer}},
+        children: '{{{complexType}}}'{{/isContainer}}
+      }{{#hasMore}},
       {{/hasMore}}{{/vars}}
-    ];
+    };
   }
 
 }
