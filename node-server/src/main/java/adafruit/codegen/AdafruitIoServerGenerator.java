@@ -13,8 +13,8 @@ public class AdafruitIoServerGenerator extends NodeJSServerCodegen {
   public AdafruitIoServerGenerator() {
 
     outputFolder = "build/server";
-    setModelPackage("lib/models");
-    setApiPackage("lib/controllers");
+    setModelPackage("lib/generated/models");
+    setApiPackage("lib/generated/controllers");
 
     /**
      * Models.  You can write model files using the modelTemplateFiles map.
