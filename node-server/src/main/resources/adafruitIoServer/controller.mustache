@@ -5,24 +5,19 @@
 const Controller = require('../../controller'),
       {{#operations}}{{modelname}} = require('../../models/{{modelname}}');
 
-class {{{classname}}}Controller extends Controller {
+exports = module.exports = Object.assign({}, Controller);
 {{#operation}}
 
-  static {{{operationId}}}(req, res, next) {
+module.exports.{{{operationId}}} = function {{{operationId}}}(req, res, next) {
 {{#hasParams}}
 
-    const {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
-          {{/hasMore}}{{/allParams}}{{#hasParams}};
+  const {{/hasParams}}{{#allParams}}{{paramName}} = req.swagger.params['{{baseName}}'].value{{#hasMore}},
+        {{/hasMore}}{{/allParams}}{{#hasParams}};
 {{/hasParams}}
 
-    {{modelname}}.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
-      .then(this.handleResponse.bind(this, res))
-      .catch(this.handleError.bind(this, res));
+  {{modelname}}.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    .then(exports.handleResponse.bind(this, res))
+    .catch(exports.handleError.bind(this, res));
 
-  }
-{{/operation}}
-
-}
-
-exports = module.exports = {{{classname}}}Controller;
-{{/operations}}
+};
+{{/operation}}{{/operations}}
