@@ -13,8 +13,8 @@ module.exports = function(grunt) {
           {
             expand: true,
             flatten: true,
-            src: ['../adafruit-io-node/server/swagger.json'],
-            dest: '../adafruit-io-node/server/'
+            src: ['build/server/swagger.json'],
+            dest: 'build/server/'
           }
         ],
         options: {
@@ -37,8 +37,8 @@ module.exports = function(grunt) {
           'cd node-server',
           'mvn package',
           'cd ..',
-          'java -cp swagger-codegen/modules/swagger-codegen-cli/target/lib/*:./node-server/target/* io.swagger.codegen.Codegen -i http://io.adafruit.com/api/docs/api.json -o ~/adafruit-io-node/server -l adafruit.codegen.AdafruitIoServerGenerator',
-          'wget --output-document=../adafruit-io-node/server/swagger.json http://io.adafruit.com/api/docs/api.json'
+          'java -cp swagger-codegen/modules/swagger-codegen-cli/target/lib/*:./node-server/target/* io.swagger.codegen.Codegen -i http://io.adafruit.com/api/docs/api.json -o build/server -l adafruit.codegen.AdafruitIoServerGenerator',
+          'wget --output-document=build/server/swagger.json http://io.adafruit.com/api/docs/api.json'
         ].join('&&')
       }
     }
